@@ -20,8 +20,8 @@ export default async function handler(req, res) {
       },
     ],
     mode: "payment",
-    success_url: "https://twoja-strona.vercel.app/success",
-    cancel_url: "https://twoja-strona.vercel.app/cancel",
+    success_url: "https://szypln.vercel.app",
+    cancel_url: "https://szypln.vercel.app",
   });
 
   res.status(200).json({ id: session.id });
