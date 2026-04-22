@@ -1,152 +1,90 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Szypłyn – Reklama Premium</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:'Inter',sans-serif;color:white;background:black;overflow-x:hidden}
-
-section{
- position:relative;
- height:100vh;
- display:flex;
- justify-content:center;
- align-items:center;
- text-align:center;
- overflow:hidden;
-}
-
-video{
- position:absolute;
- top:0;left:0;
- width:100%;height:100%;
- object-fit:cover;
- z-index:0;
-}
-
-.overlay{
- position:absolute;
- inset:0;
- background:rgba(0,0,0,0.55);
- z-index:1;
-}
-
-.card{
- position:relative;
- z-index:2;
- background:rgba(0,0,0,0.55);
- padding:40px;
- border-radius:20px;
- backdrop-filter:blur(12px);
- max-width:420px;
- box-shadow:0 20px 60px rgba(0,0,0,0.6);
-}
-
-.price{font-size:34px;color:#4ade80;margin:15px 0;font-weight:600}
-
-.table{
- background:rgba(0,0,0,0.85);
- padding:30px;
- border-radius:20px;
- box-shadow:0 10px 40px rgba(0,0,0,0.6);
-}
-
-.row{
- display:flex;
- justify-content:space-between;
- padding:12px 0;
- border-bottom:1px solid rgba(255,255,255,0.15);
-}
-
-.good{color:#4ade80}
-.bad{color:#ef4444}
-
-button{
- margin-top:20px;
- padding:16px;
- width:100%;
- background:#22c55e;
- border:none;
- border-radius:12px;
- cursor:pointer;
- font-size:17px;
- font-weight:600;
- box-shadow:0 0 20px rgba(34,197,94,0.6);
- transition:0.3s;
-}
-
-button:hover{
- transform:scale(1.05);
- box-shadow:0 0 30px rgba(34,197,94,1);
-}
-
-</style>
+    <meta charset="UTF-8">
+    <title>Szypłyn - płyn do spryskiwaczy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f6f8;
+        }
+        header {
+            background-color: #0077cc;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .product {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        .product img {
+            width: 250px;
+            border-radius: 10px;
+        }
+        .info {
+            flex: 1;
+        }
+        .price {
+            font-size: 28px;
+            color: #28a745;
+            margin: 15px 0;
+        }
+        button {
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
 
-<!-- 🌧 DESZCZ -->
-<section>
-<video autoplay muted loop playsinline>
-<source src="https://cdn.coverr.co/videos/coverr-rain-on-window-1573/1080p.mp4" type="video/mp4">
-</video>
-<div class="overlay"></div>
+<header>
+    <h1>Szypłyn</h1>
+    <p>Płyn do spryskiwaczy 5L</p>
+</header>
 
-<div class="card">
-<h1>Jedziesz w deszczu...</h1>
-<p>Nic nie widać</p>
+<div class="container">
+    <div class="product">
+        <img src="https://via.placeholder.com/250" alt="Szypłyn 5L">
+        
+        <div class="info">
+            <h2>Szypłyn 5L</h2>
+            <p>Wysokiej jakości płyn do spryskiwaczy. Skutecznie usuwa zabrudzenia, zapewnia dobrą widoczność i bezpieczeństwo jazdy.</p>
+            
+            <div class="price">18 zł</div>
+            
+            <button>Kup teraz</button>
+        </div>
+    </div>
 </div>
-</section>
 
-<!-- 🚗 PROBLEM -->
-<section>
-<video autoplay muted loop playsinline>
-<source src="https://cdn.coverr.co/videos/coverr-driving-in-heavy-rain-9716/1080p.mp4" type="video/mp4">
-</video>
-<div class="overlay"></div>
-
-<div class="card">
-<h2>Problem</h2>
-<p>Smugi na szybie</p>
-</div>
-</section>
-
-<!-- ✨ ROZWIĄZANIE -->
-<section>
-<video autoplay muted loop playsinline>
-<source src="https://cdn.coverr.co/videos/coverr-car-windshield-clean-1600/1080p.mp4" type="video/mp4">
-</video>
-<div class="overlay"></div>
-
-<div class="card">
-<h2>Szypłyn 5L</h2>
-<p>Zero smug – perfekcyjna widoczność</p>
-<div class="price">18 zł</div>
-</div>
-</section>
-
-<!-- 📊 PORÓWNANIE -->
-<section>
-<div class="table">
-<h2>Porównanie</h2>
-<div class="row"><span>Inne płyny</span><span class="bad">Smugi ❌</span></div>
-<div class="row"><span>Szypłyn</span><span class="good">Brak smug ✅</span></div>
-<div class="row"><span>Widoczność</span><span class="good">Perfekcyjna ✅</span></div>
-<button>Kup teraz – 18 zł</button>
-</div>
-</section>
-
-<script>
-document.querySelectorAll("video").forEach(v=>{
- v.muted=true;
- v.play().catch(()=>{
-  document.body.addEventListener("click",()=>v.play(),{once:true});
- });
-});
-</script>
+<footer>
+    <p>&copy; 2026 Szypłyn - Wszystkie prawa zastrzeżone</p>
+</footer>
 
 </body>
 </html>
