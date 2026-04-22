@@ -3,75 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Szypłyn</title>
+<title>Szypłyn 5L</title>
+
+<script src="https://js.stripe.com/v3/"></script>
 
 <style>
 body{
- margin:0;
- font-family:Arial;
- background:black;
+ font-family: Arial;
+ background:#111;
  color:white;
- overflow-x:hidden;
-}
-
-/* VIDEO TŁO */
-video{
- position:fixed;
- width:100%;
- height:100%;
- object-fit:cover;
- top:0;
- left:0;
- z-index:-2;
-}
-
-/* CIEMNA WARSTWA */
-.overlay{
- position:fixed;
- inset:0;
- background:rgba(0,0,0,0.5);
- z-index:-1;
-}
-
-/* SEKCJE */
-.section{
- height:100vh;
- display:flex;
- justify-content:center;
- align-items:center;
  text-align:center;
+ padding:50px;
 }
-
-/* TEKST – DUŻY, KINOWY */
-.text{
- font-size:48px;
- font-weight:600;
- max-width:800px;
- line-height:1.4;
- opacity:0;
- transform:translateY(40px);
- transition:1s;
-}
-
-/* POJAWIANIE */
-.show{
- opacity:1;
- transform:translateY(0);
-}
-
-.price{
- color:#22c55e;
- font-size:60px;
- margin-top:20px;
-}
-
 button{
- margin-top:30px;
- padding:18px 40px;
+ padding:15px 30px;
  font-size:18px;
- background:#22c55e;
+ background:#4ade80;
  border:none;
- border-radius:12px;
+ border-radius:10px;
  cursor:pointer;
 }
 </style>
@@ -79,51 +28,37 @@ button{
 
 <body>
 
-<!-- 🔥 PRAWDZIWE VIDEO -->
-<video autoplay muted loop playsinline>
-<source src="/video.mp4" type="video/mp4">
-</video>
+<h1>Szypłyn 5L</h1>
+<p>Cena: 18 zł</p>
 
-<div class="overlay"></div>
+<select id="qty">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+</select>
 
-<!-- SCENA 1 -->
-<div class="section">
-<div class="text">Jedziesz w deszczu…<br>Nic nie widać</div>
-</div>
+<br><br>
 
-<!-- SCENA 2 -->
-<div class="section">
-<div class="text">Smugi na szybie…</div>
-</div>
-
-<!-- SCENA 3 -->
-<div class="section">
-<div class="text">
-Szypłyn 5L<br>
-<div class="price">18 zł</div>
-</div>
-</div>
-
-<!-- SCENA 4 -->
-<div class="section">
-<div class="text">
-Brak smug. Pełna widoczność.<br>
-<button>Kup teraz</button>
-</div>
-</div>
+<button id="buy">Kup teraz</button>
 
 <script>
-const texts=document.querySelectorAll(".text");
+const stripe = Stripe("pk_test_TUTAJ_WKLEJ_SWÓJ_KLUCZ");
 
-const observer=new IntersectionObserver(entries=>{
- entries.forEach(e=>{
-  if(e.isIntersecting){
-   e.target.classList.add("show");
-  }
+document.getElementById("buy").onclick = async () => {
+ const qty = document.getElementById("qty").value;
+
+ const res = await fetch("/api/create-checkout-session", {
+  method: "POST",
+  headers: {"Content-Type": "application/json"},
+  body: JSON.stringify({ qty })
  });
-},{threshold:0.5});
 
-texts.forEach(t=>observer.observe(t));
+ const data = await res.json();
+
+ stripe.redirectToCheckout({
+  sessionId: data.id
+ });
+};
 </script>
 
 </body>
