@@ -3,44 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Szypłyn 5L</title>
-
-<script src="https://js.stripe.com/v3/"></script>
+<title>Szypłyn – Story</title>
 
 <style>
-body{font-family:Arial;background:#111;color:white;text-align:center;padding:50px}
-button{padding:15px 30px;font-size:18px;background:#4ade80;border:none;border-radius:10px;cursor:pointer}
-</style>
+body{margin:0;font-family:Arial;color:white;background:black}
 
+section{
+ height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ text-align:center;
+ position:relative;
+ overflow:hidden;
+}
+
+video{
+ position:absolute;
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ z-index:0;
+}
+
+.overlay{
+ position:absolute;
+ inset:0;
+ background:rgba(0,0,0,0.5);
+}
+
+.box{
+ position:relative;
+ z-index:2;
+ background:rgba(0,0,0,0.6);
+ padding:30px;
+ border-radius:15px;
+ backdrop-filter:blur(10px);
+}
+
+.price{color:#4ade80;font-size:30px}
+
+.table{
+ background:black;
+ padding:30px;
+}
+
+.row{
+ display:flex;
+ justify-content:space-between;
+ padding:10px;
+ border-bottom:1px solid #444;
+}
+
+.good{color:#4ade80}
+.bad{color:#ef4444}
+</style>
 </head>
+
 <body>
 
-<h1>Szypłyn 5L</h1>
-<p>18 zł</p>
+<!-- 🌧 DESZCZ -->
+<section>
+<video autoplay muted loop playsinline>
+<source src="https://cdn.coverr.co/videos/coverr-rain-on-window-1573/1080p.mp4" type="video/mp4">
+</video>
+<div class="overlay"></div>
 
-<select id="qty">
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-</select>
+<div class="box">
+<h1>Jedziesz w deszczu...</h1>
+<p>Nic nie widać</p>
+</div>
+</section>
 
-<br><br>
-<button id="checkout-button">Kup teraz</button>
+<!-- 🚗 PROBLEM -->
+<section>
+<video autoplay muted loop playsinline>
+<source src="https://cdn.coverr.co/videos/coverr-driving-in-the-rain-5408/1080p.mp4" type="video/mp4">
+</video>
+<div class="overlay"></div>
+
+<div class="box">
+<h2>Smugi. Rozmazany obraz.</h2>
+<p>Niebezpieczna jazda</p>
+</div>
+</section>
+
+<!-- ✨ ROZWIĄZANIE -->
+<section>
+<video autoplay muted loop playsinline>
+<source src="https://cdn.coverr.co/videos/coverr-clean-car-windshield-5125/1080p.mp4" type="video/mp4">
+</video>
+<div class="overlay"></div>
+
+<div class="box">
+<h2>Szypłyn 5L</h2>
+<p>Perfekcyjna widoczność</p>
+<div class="price">18 zł</div>
+</div>
+</section>
+
+<!-- 📊 PORÓWNANIE -->
+<section>
+<div class="table">
+<h2>Porównanie</h2>
+
+<div class="row">
+<span>Inne płyny</span>
+<span class="bad">Smugi ❌</span>
+</div>
+
+<div class="row">
+<span>Szypłyn</span>
+<span class="good">Brak smug ✅</span>
+</div>
+
+<div class="row">
+<span>Widoczność</span>
+<span class="good">Perfekcyjna ✅</span>
+</div>
+
+</div>
+</section>
 
 <script>
-const stripe = Stripe("TU_WKLEJ_PK_TEST"); // <-- TWÓJ KLUCZ
-
-document.getElementById("checkout-button").addEventListener("click", async () => {
-  const qty = document.getElementById("qty").value;
-
-  const res = await fetch("/api/create-checkout-session", {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ qty })
-  });
-
-  const data = await res.json();
-  stripe.redirectToCheckout({ sessionId: data.id });
+document.querySelectorAll("video").forEach(v=>{
+ v.play().catch(()=>{
+  document.body.addEventListener("click",()=>v.play(),{once:true});
+ });
 });
 </script>
 
