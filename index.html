@@ -8,28 +8,15 @@
 <script src="https://js.stripe.com/v3/"></script>
 
 <style>
-body{
- font-family: Arial;
- background:#111;
- color:white;
- text-align:center;
- padding:50px;
-}
-button{
- padding:15px 30px;
- font-size:18px;
- background:#4ade80;
- border:none;
- border-radius:10px;
- cursor:pointer;
-}
+body{font-family:Arial;background:#111;color:white;text-align:center;padding:50px}
+button{padding:15px 30px;font-size:18px;background:#4ade80;border:none;border-radius:10px;cursor:pointer}
 </style>
-</head>
 
+</head>
 <body>
 
 <h1>Szypłyn 5L</h1>
-<p>Cena: 18 zł</p>
+<p>18 zł</p>
 
 <select id="qty">
 <option value="1">1</option>
@@ -38,27 +25,23 @@ button{
 </select>
 
 <br><br>
-
-<button id="buy">Kup teraz</button>
+<button id="checkout-button">Kup teraz</button>
 
 <script>
-const stripe = Stripe("pk_test_TUTAJ_WKLEJ_SWÓJ_KLUCZ");
+const stripe = Stripe("TU_WKLEJ_PK_TEST"); // <-- TWÓJ KLUCZ
 
-document.getElementById("buy").onclick = async () => {
- const qty = document.getElementById("qty").value;
+document.getElementById("checkout-button").addEventListener("click", async () => {
+  const qty = document.getElementById("qty").value;
 
- const res = await fetch("/api/create-checkout-session", {
-  method: "POST",
-  headers: {"Content-Type": "application/json"},
-  body: JSON.stringify({ qty })
- });
+  const res = await fetch("/api/create-checkout-session", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ qty })
+  });
 
- const data = await res.json();
-
- stripe.redirectToCheckout({
-  sessionId: data.id
- });
-};
+  const data = await res.json();
+  stripe.redirectToCheckout({ sessionId: data.id });
+});
 </script>
 
 </body>
