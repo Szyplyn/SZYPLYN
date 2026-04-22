@@ -1,37 +1,65 @@
-import Stripe from "stripe";
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Szypłyn 5L</title>
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+<script src="https://js.stripe.com/v3/"></script>
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
-  try {
-    const { qty } = req.body;
-
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: [
-        {
-          price_data: {
-            currency: "pln",
-            product_data: {
-              name: "Szypłyn 5L",
-            },
-            unit_amount: 1800,
-          },
-          quantity: qty,
-        },
-      ],
-      mode: "payment",
-      success_url: "https://twoja-strona.vercel.app/success",
-      cancel_url: "https://twoja-strona.vercel.app/cancel",
-    });
-
-    res.status(200).json({ id: session.id });
-
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+<style>
+body{
+ font-family: Arial;
+ background:#111;
+ color:white;
+ text-align:center;
+ padding:50px;
 }
+button{
+ padding:15px 30px;
+ font-size:18px;
+ background:#4ade80;
+ border:none;
+ border-radius:10px;
+ cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Szypłyn 5L</h1>
+<p>Cena: 18 zł</p>
+
+<select id="qty">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+</select>
+
+<br><br>
+
+<button id="buy">Kup teraz</button>
+
+<script>
+const stripe = Stripe("pk_test_TUTAJ_WKLEJ_SWÓJ_KLUCZ");
+
+document.getElementById("buy").onclick = async () => {
+ const qty = document.getElementById("qty").value;
+
+ const res = await fetch("/api/create-checkout-session", {
+  method: "POST",
+  headers: {"Content-Type": "application/json"},
+  body: JSON.stringify({ qty })
+ });
+
+ const data = await res.json();
+
+ stripe.redirectToCheckout({
+  sessionId: data.id
+ });
+};
+</script>
+
+</body>
+</html>
