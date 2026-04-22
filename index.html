@@ -3,19 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Szypłyn – Reklama</title>
+<title>Szypłyn</title>
 
 <style>
 body{
  margin:0;
  font-family:Arial;
- color:white;
  background:black;
+ color:white;
  overflow-x:hidden;
 }
 
-section{
- position:relative;
+/* 🌧 DESZCZ */
+.rain{
+ position:fixed;
+ width:100%;
+ height:100%;
+ background-image:linear-gradient(transparent, rgba(255,255,255,0.2));
+ animation:rain 0.3s linear infinite;
+ opacity:0.2;
+ z-index:-1;
+}
+
+@keyframes rain{
+ from{background-position:0 -100px}
+ to{background-position:0 100px}
+}
+
+/* 🌌 TŁO */
+.bg{
+ position:fixed;
+ width:100%;
+ height:100%;
+ background:radial-gradient(circle at center, #111, #000);
+ z-index:-2;
+}
+
+/* 🎬 SEKCJE */
+.section{
  height:100vh;
  display:flex;
  justify-content:center;
@@ -23,52 +48,50 @@ section{
  text-align:center;
 }
 
-video{
- position:absolute;
- width:100%;
- height:100%;
- object-fit:cover;
- top:0;
- left:0;
-}
-
-.overlay{
- position:absolute;
- inset:0;
- background:rgba(0,0,0,0.5);
-}
-
+/* 🧊 KARTA */
 .card{
- position:relative;
  background:rgba(0,0,0,0.6);
  padding:40px;
  border-radius:20px;
- backdrop-filter:blur(10px);
+ backdrop-filter:blur(15px);
+ transform:translateY(50px);
+ opacity:0;
+ transition:1s;
 }
 
-.table{
- background:rgba(0,0,0,0.85);
- padding:30px;
- border-radius:15px;
+.card.show{
+ transform:translateY(0);
+ opacity:1;
 }
 
-.row{
- display:flex;
- justify-content:space-between;
- padding:10px;
- border-bottom:1px solid rgba(255,255,255,0.2);
+/* 💰 */
+.price{
+ font-size:40px;
+ color:#22c55e;
 }
 
-.good{color:#22c55e}
-.bad{color:#ef4444}
+/* 🟡 AUTO (fake efekt) */
+.car{
+ width:200px;
+ height:100px;
+ background:linear-gradient(to right, yellow, orange);
+ border-radius:20px;
+ margin:20px auto;
+ box-shadow:0 0 40px rgba(255,255,0,0.5);
+ animation:drive 3s infinite linear;
+}
+
+@keyframes drive{
+ from{transform:translateX(-100px)}
+ to{transform:translateX(100px)}
+}
 
 button{
- margin-top:20px;
- padding:15px;
- width:100%;
+ padding:15px 25px;
  background:#22c55e;
  border:none;
  border-radius:10px;
+ margin-top:15px;
  cursor:pointer;
 }
 </style>
@@ -76,68 +99,51 @@ button{
 
 <body>
 
-<!-- DESZCZ -->
-<section>
-<video autoplay muted loop playsinline>
-<source src="/video.mp4" type="video/mp4">
-</video>
-<div class="overlay"></div>
+<div class="bg"></div>
+<div class="rain"></div>
 
+<!-- SCENA 1 -->
+<div class="section">
+<div class="card">Jedziesz w deszczu...<br>Nic nie widać</div>
+</div>
+
+<!-- SCENA 2 -->
+<div class="section">
 <div class="card">
-<h1>Jedziesz w deszczu...</h1>
-<p>Nic nie widać</p>
+<div class="car"></div>
+Smugi na szybie...
 </div>
-</section>
+</div>
 
-<!-- JAZDA -->
-<section>
-<video autoplay muted loop playsinline>
-<source src="/video.mp4" type="video/mp4">
-</video>
-<div class="overlay"></div>
-
+<!-- SCENA 3 -->
+<div class="section">
 <div class="card">
-<h2>Smugi na szybie</h2>
+Szypłyn 5L<br>
+<span class="price">18 zł</span>
 </div>
-</section>
+</div>
 
-<!-- ROZWIĄZANIE -->
-<section>
-<video autoplay muted loop playsinline>
-<source src="/video.mp4" type="video/mp4">
-</video>
-<div class="overlay"></div>
-
+<!-- SCENA 4 -->
+<div class="section">
 <div class="card">
-<h2>Szypłyn 5L</h2>
-<p>Zero smug</p>
-<h1 style="color:#22c55e;">18 zł</h1>
-</div>
-</section>
-
-<!-- PORÓWNANIE -->
-<section>
-<div class="table">
-<h2>Porównanie</h2>
-
-<div class="row">
-<span>Inne płyny</span>
-<span class="bad">Smugi ❌</span>
-</div>
-
-<div class="row">
-<span>Szypłyn</span>
-<span class="good">Brak smug ✅</span>
-</div>
-
-<div class="row">
-<span>Widoczność</span>
-<span class="good">Perfekcyjna ✅</span>
-</div>
-
+Brak smug ✅<br>
 <button>Kup teraz</button>
 </div>
-</section>
+</div>
+
+<script>
+const cards=document.querySelectorAll(".card");
+
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(e=>{
+  if(e.isIntersecting){
+   e.target.classList.add("show");
+  }
+ });
+});
+
+cards.forEach(c=>observer.observe(c));
+</script>
 
 </body>
 </html>
