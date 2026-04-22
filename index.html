@@ -14,32 +14,26 @@ body{
  overflow-x:hidden;
 }
 
-/* 🌧 DESZCZ */
-.rain{
+/* VIDEO TŁO */
+video{
  position:fixed;
  width:100%;
  height:100%;
- background-image:linear-gradient(transparent, rgba(255,255,255,0.2));
- animation:rain 0.3s linear infinite;
- opacity:0.2;
- z-index:-1;
-}
-
-@keyframes rain{
- from{background-position:0 -100px}
- to{background-position:0 100px}
-}
-
-/* 🌌 TŁO */
-.bg{
- position:fixed;
- width:100%;
- height:100%;
- background:radial-gradient(circle at center, #111, #000);
+ object-fit:cover;
+ top:0;
+ left:0;
  z-index:-2;
 }
 
-/* 🎬 SEKCJE */
+/* CIEMNA WARSTWA */
+.overlay{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,0.5);
+ z-index:-1;
+}
+
+/* SEKCJE */
 .section{
  height:100vh;
  display:flex;
@@ -48,50 +42,36 @@ body{
  text-align:center;
 }
 
-/* 🧊 KARTA */
-.card{
- background:rgba(0,0,0,0.6);
- padding:40px;
- border-radius:20px;
- backdrop-filter:blur(15px);
- transform:translateY(50px);
+/* TEKST – DUŻY, KINOWY */
+.text{
+ font-size:48px;
+ font-weight:600;
+ max-width:800px;
+ line-height:1.4;
  opacity:0;
+ transform:translateY(40px);
  transition:1s;
 }
 
-.card.show{
- transform:translateY(0);
+/* POJAWIANIE */
+.show{
  opacity:1;
+ transform:translateY(0);
 }
 
-/* 💰 */
 .price{
- font-size:40px;
  color:#22c55e;
-}
-
-/* 🟡 AUTO (fake efekt) */
-.car{
- width:200px;
- height:100px;
- background:linear-gradient(to right, yellow, orange);
- border-radius:20px;
- margin:20px auto;
- box-shadow:0 0 40px rgba(255,255,0,0.5);
- animation:drive 3s infinite linear;
-}
-
-@keyframes drive{
- from{transform:translateX(-100px)}
- to{transform:translateX(100px)}
+ font-size:60px;
+ margin-top:20px;
 }
 
 button{
- padding:15px 25px;
+ margin-top:30px;
+ padding:18px 40px;
+ font-size:18px;
  background:#22c55e;
  border:none;
- border-radius:10px;
- margin-top:15px;
+ border-radius:12px;
  cursor:pointer;
 }
 </style>
@@ -99,40 +79,41 @@ button{
 
 <body>
 
-<div class="bg"></div>
-<div class="rain"></div>
+<!-- 🔥 PRAWDZIWE VIDEO -->
+<video autoplay muted loop playsinline>
+<source src="/video.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
 
 <!-- SCENA 1 -->
 <div class="section">
-<div class="card">Jedziesz w deszczu...<br>Nic nie widać</div>
+<div class="text">Jedziesz w deszczu…<br>Nic nie widać</div>
 </div>
 
 <!-- SCENA 2 -->
 <div class="section">
-<div class="card">
-<div class="car"></div>
-Smugi na szybie...
-</div>
+<div class="text">Smugi na szybie…</div>
 </div>
 
 <!-- SCENA 3 -->
 <div class="section">
-<div class="card">
+<div class="text">
 Szypłyn 5L<br>
-<span class="price">18 zł</span>
+<div class="price">18 zł</div>
 </div>
 </div>
 
 <!-- SCENA 4 -->
 <div class="section">
-<div class="card">
-Brak smug ✅<br>
+<div class="text">
+Brak smug. Pełna widoczność.<br>
 <button>Kup teraz</button>
 </div>
 </div>
 
 <script>
-const cards=document.querySelectorAll(".card");
+const texts=document.querySelectorAll(".text");
 
 const observer=new IntersectionObserver(entries=>{
  entries.forEach(e=>{
@@ -140,9 +121,9 @@ const observer=new IntersectionObserver(entries=>{
    e.target.classList.add("show");
   }
  });
-});
+},{threshold:0.5});
 
-cards.forEach(c=>observer.observe(c));
+texts.forEach(t=>observer.observe(t));
 </script>
 
 </body>
